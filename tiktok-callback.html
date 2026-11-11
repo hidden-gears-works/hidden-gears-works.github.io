@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>TikTok sign-in · Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body><main>
+<h1>TikTok sign-in</h1>
+<p id="msg">Reading the answer from TikTok…</p>
+<p><code id="code" style="word-break:break-all"></code></p>
+<p><button id="copy" hidden>Copy the code</button></p>
+<p class="doux"><small>This page only shows the one-time code TikTok put in the address bar, so the owner can paste it into the Studio tool. It sends nothing anywhere. The code works once and expires within minutes.</small></p>
+<script>
+const p = new URLSearchParams(location.search);
+const msg = document.getElementById('msg'), out = document.getElementById('code'), btn = document.getElementById('copy');
+if (p.get('error')) {
+  msg.textContent = 'TikTok returned an error: ' + p.get('error') + (p.get('error_description') ? ' (' + p.get('error_description') + ')' : '');
+} else if (p.get('code')) {
+  msg.textContent = 'Copy this whole line and paste it into the terminal:';
+  out.textContent = location.href;
+  btn.hidden = false;
+  btn.onclick = () => navigator.clipboard.writeText(location.href).then(() => btn.textContent = 'Copied');
+} else {
+  msg.textContent = 'No code in this address. Start the sign-in again from the Studio tool.';
+}
+</script>
+</main></body>
+</html>
