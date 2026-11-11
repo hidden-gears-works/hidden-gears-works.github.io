@@ -10,17 +10,15 @@
 <body><main>
 <h1>TikTok sign-in</h1>
 <p id="msg">Reading the answer from TikTok…</p>
-<p><code id="code" style="word-break:break-all"></code></p>
-<p><button id="copy" hidden>Copy the code</button></p>
+<p><button id="copy" hidden>Copy for the terminal</button></p>
 <p class="doux"><small>This page only shows the one-time code TikTok put in the address bar, so the owner can paste it into the Studio tool. It sends nothing anywhere. The code works once and expires within minutes.</small></p>
 <script>
 const p = new URLSearchParams(location.search);
-const msg = document.getElementById('msg'), out = document.getElementById('code'), btn = document.getElementById('copy');
+const msg = document.getElementById('msg'), btn = document.getElementById('copy');
 if (p.get('error')) {
   msg.textContent = 'TikTok returned an error: ' + p.get('error') + (p.get('error_description') ? ' (' + p.get('error_description') + ')' : '');
 } else if (p.get('code')) {
-  msg.textContent = 'Copy this whole line and paste it into the terminal:';
-  out.textContent = location.href;
+  msg.textContent = 'Code received. Click the button, then paste into the terminal and press Enter.';
   btn.hidden = false;
   btn.onclick = () => navigator.clipboard.writeText(location.href).then(() => btn.textContent = 'Copied');
 } else {
